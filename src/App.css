@@ -4,22 +4,27 @@
 
 .App {
   text-align: center;
+}
+
+
+
+.input-wrapper {
   display: flex;
   justify-content: center;
 }
 
-html body {
+html, body {
   background-color: #B4C5E4;
   box-sizing: border-box;
   margin: 0;
-  /* border:5px solid red; */
+  
 }
+
 
 .Header {
   margin-top: 50px;
   width: 50%;
   background-color: #FBFFF1;
-  position: fixed;
   border-radius: 10px;
   justify-content: center;
   padding-top: 1rem;
@@ -72,18 +77,82 @@ h4 {
   transition: 300ms ease-in-out;
 }
 
-.List {
-  border: 5px solid red;
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  padding-top:2rem;
+  padding-bottom: 1rem;
+}
+.single-art {
+  border-radius:10px;
+  width: calc(100vw - 55%);
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f1eed6;
+  padding:1rem;
+  padding-bottom: 3rem;
+  
+}
+.img-wrapper {
+  width: fit-content;
+  height: fit-content;
+  padding-top: 3rem;
+  padding-left: 2rem;
+  padding-bottom: 1.5rem;
+  padding-right: 2rem;
+}
+.card-text-wrapper {
+  display: flex;
+  justify-content: center;
+  
+}
+
+.art-title {
+  max-width:700px;
+  height: fit-content;
+  text-align: center;
+  font-family: 'Mulish', sans-serif;
+  font-weight: 300;
+}
+.art-artist, .art-year  {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 200;
+
+}
+.art-img {
+  width: auto;
+  height: 250px;
 }
 
 @media screen and (max-width:1500px) {
   .Header {
     width:60%;
   }
+  .single-art {
+    width: calc(100vw - 40%);
+  }
+  /* .art-img {
+    height: 200px;
+  } */
 }
 
 @media screen and (max-width:960px) {
   .Header {
     width:80%;
   }
+  .single-art {
+    width: calc(100vw - 20%);
+  }
 }
+@media screen and (max-width:850px) {
+  .art-img {
+    height: 200px;
+  }
+  }
+  @media screen and (max-width:530px) {
+    .art-img {
+      height: 170px;
+    }
+    }

@@ -3,9 +3,11 @@ import {GrAdd} from "react-icons/gr"
 
 export interface Props {
     input: string,
+    oldInput:string,
     setInput: React.Dispatch<React.SetStateAction<string>>,
     handleSubmit: React.FormEventHandler<HTMLFormElement> 
 }
+
 
 export const InputField: React.FC<Props> = ({ input, setInput, handleSubmit }) => {
     return (
@@ -34,5 +36,6 @@ export const InputField: React.FC<Props> = ({ input, setInput, handleSubmit }) =
             </section>
 
         </div>
+
     )
 }
