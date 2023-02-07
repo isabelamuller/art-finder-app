@@ -1,80 +1,131 @@
 import React from 'react';
 import './App.css';
 import { InputField, Props } from './components/Input';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Pieces from './components/List';
-import { Api, retrieveArt, addressingValues, checkArtists } from './services/api';
+import { Api, retrieveArt, addressingValues, checkArtists, removeEmptyObjects } from './services/api';
 import { IItem } from './services/api';
+import { ModalHowTo, ModalSettings } from './components/Modal/Modal';
+import { useModalHowTo, useModalSettings } from './components/Modal/useModal';
+import { HowToContent, SettingsContent } from './components/Modal/ModalContent';
+import { BsQuestionLg } from "react-icons/bs"
+import { FcSettings } from "react-icons/fc"
+// import Header from './components/Header';
+import { ThemeContext } from './components/contexts/theme-context';
+import RecArtists from './components/RecArtists/RecArtists';
+import { ISingle } from './components/RecArtists/SingleArtists';
 
 
 const App: React.FC = () => {
   const [input, setInput] = useState('')
   const [values, setValues] = useState<Array<IItem["item"]>>([])
-  // const [isOpen, setIsOpen] = useState<boolean>(false)
-  let oldInput:string = input
-  
-  const api = async (input: Props["input"], oldInput:Props["oldInput"]) => {
-    const itens = await Api(input)
-    const newItens = await retrieveArt(itens)
-    const valid = await checkArtists(newItens, oldInput)
+  const oldInput = input
+  const validObjects: Array<Object> = [{}]
+  const { isOpenHowTo, toggleHowTo } = useModalHowTo()
+  const { isOpenSettings, toggleSettings } = useModalSettings()
+  const [theme, setTheme] = useState('light')
 
-    const addressedValues = addressingValues(valid)
-    setValues(addressedValues)
-    
+
+  const toggleTheme = () => {
+    if (theme === 'dark') {
+      setTheme('light');
+      localStorage.setItem('theme', 'light')
+    } else {
+      setTheme('dark');
+      localStorage.setItem('theme', 'dark')
+    }
   }
-  
+
+  useEffect(() => {
+    const themeLocal = localStorage.getItem('theme');
+    if (themeLocal) {
+      setTheme(themeLocal);
+    }
+  }, [])
+
+  const api = async (input: Props["input"], oldInput: Props["oldInput"], validObjects: Props["validObjects"]) => {
+    const itens = await Api(input)
+    if (itens === null) {
+      window.alert("Artist not found")
+    } else {
+      const newItens = await retrieveArt(itens)
+      const validArtist = checkArtists(newItens, oldInput, validObjects)
+      const addressedValues = addressingValues(validArtist)
+      const newArray = await removeEmptyObjects(addressedValues)
+      setValues(newArray)
+    }
+  }
+
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    
-    // const Modal = () => {
-    //   setIsOpen(true)
 
-    //   return (
-    //     <div className='Modal'>
-    //       <h1 className='modal-text'>The field can't be blank!</h1>
-    //       <button
-    //         onClick={() => setIsOpen(false)}
-    //         className="modal-btn">
-    //         close
-    //       </button>
-    //     </div>
-    //   )
-    // }
-    
+
     if (!input) {
-      alert("O campo não pode ser vazio") // abrir um modalzitcho
+      alert("O campo não pode ser vazio")
+      // setIsOpen(true)// abrir um modalzitcho
       return
     }
-    
-    
-    const newInput = input.indexOf(' ') > 0 ? input.replace(/ /g, '+') : oldInput
-    console.log("input", newInput)
-
-    const capitalizeWord = () => {
-      const newOldInput= oldInput
-      .toLowerCase()
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
-        oldInput = newOldInput
-      };
 
 
-      capitalizeWord()
-      console.log(oldInput, "tem q dar")
-    api(newInput, oldInput)
+    const newInput = input.indexOf(' ') > 0 ? input.replace(/ /g, '+') : input
+
+    api(newInput, oldInput, validObjects)
+
+    while (values.length === 0) {
+      console.log("carregando")
+      break;
+    }
 
   }
-// criar novo componente p nome do artista e podendo dar like etc 
 
+  const handleClick:React.MouseEventHandler<HTMLDivElement>  = async (selectedArtistName:ISingle["name"]) => {
+    setInput(selectedArtistName)
+    console.log(input)
+    console.log("entrou")
+    const itens = await Api(input)
+    const newItens = await retrieveArt(itens)
+    const validArtist = checkArtists(newItens, oldInput, validObjects)
+    const addressedValues = addressingValues(validArtist)
+    const newArray = await removeEmptyObjects(addressedValues)
+    setValues(newArray)
+  }
+
+
+
+  // criar novo arquivo p nome do artista e podendo dar like etc 
+  //settings: darkmode e idioma ate agora
+  //footer: meu insta meu github meu linkedin logo da dws
+  // salvar no cache n sei cm
   return (
-    <div className="App">
-    <div className='input-wrapper'>
-      <InputField input={input} setInput={setInput} handleSubmit={handleSubmit} oldInput={oldInput}
-      />
-    </div>
-      <Pieces addressedValues={values} />
-    </div>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      <div className={`App ${theme}-theme`}>
+        <div className={`input-wrapper  ${theme}-theme`}>
+          <div className='Modal-Btns'>
+            <div className='how-to-modal'>
+              <BsQuestionLg onClick={toggleHowTo} className={`Modal-btn-howto ${theme}-theme`} />
+            </div>
+            <div className='settings-modal'>
+              <FcSettings onClick={toggleSettings} className={`Modal-Btn-Settings  ${theme}-theme`} />
+            </div>
+
+          </div>
+          <InputField input={input} setInput={setInput} handleSubmit={handleSubmit} oldInput={oldInput} validObjects={validObjects}
+          />
+        </div>
+        <RecArtists handleClick={handleClick}/>
+        <ModalHowTo isOpenHowTo={isOpenHowTo} toggleHowTo={toggleHowTo}>
+          <HowToContent />
+        </ModalHowTo>
+        <ModalSettings isOpenSettings={isOpenSettings} toggleSettings={toggleSettings}>
+          <SettingsContent />
+        </ModalSettings>
+        {/* <button onClick={handleDelete}>aqui</button> */}
+        <Pieces addressedValues={values}>
+          {/* <Header input={input}/> */}
+        </Pieces>
+      </div>
+    </ThemeContext.Provider>
   );
 }
 
