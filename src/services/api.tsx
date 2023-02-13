@@ -20,6 +20,7 @@ export interface IItem {
 }
 
 export interface IItems {
+    handleClear?: () => void,
     children?: ReactNode,
     addressedValues: Array<IItem["item"]>
 }
@@ -92,7 +93,7 @@ export const addressingValues = (validObjects: Props["validObjects"]) => {
         const { primaryImageSmall, artistDisplayName, title, objectDate, objectURL }: any = elem;
         item.artistName = artistDisplayName
         if (primaryImageSmall === "") {
-            item.img = "https://i.postimg.cc/rpp77CLw/image-2023-02-02-002050989.png"
+            item.img = "https://i.postimg.cc/pdf2FhnS/image-2023-02-02-002050989.png"
         } else {
             item.img = primaryImageSmall
         }
@@ -115,6 +116,6 @@ export const removeEmptyObjects = async (validObjects: Props["validObjects"]) =>
         return newArray
     })
     const noEmptyObjects = newArray.filter(value=>Object.keys(value).length !== 0)
-    console.log(newArray)
+   
     return noEmptyObjects as IItems["addressedValues"]
 }

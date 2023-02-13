@@ -1,25 +1,23 @@
 import React from "react";
-// import { IItems } from "../services/api";
-// import { Props } from "./Input";
+import { ThemeContext } from "./contexts/theme-context";
+import { useContext } from "react";
 
-// const Header = (input: Teste["input"]) => {
-//     const lala = () => {
-//         console.log("entrou no header")
-//         return (
-//             <div>
-//                 <h1>{input}</h1>
-//             </div>
-//         )
-//     }
-//     return (
-//         <>
 
-//         { lala() }
-//         </>
-//     )
-// }
+const Header: React.FC= () => {
 
-// export default Header;
+    const { theme } = useContext(ThemeContext)
+    return (
+        <>
+           
+        <div className={`Header ${theme}-theme`}>
+            <h1 className={`title ${theme}-theme`}>ART FINDER!</h1>
+        </div>
+        
+        </>
+    )
+}
+
+export default Header;
 
 // arrumar essa porra 
 // cara n rolou

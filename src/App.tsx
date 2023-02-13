@@ -10,11 +10,11 @@ import { useModalHowTo, useModalSettings } from './components/Modal/useModal';
 import { HowToContent, SettingsContent } from './components/Modal/ModalContent';
 import { BsQuestionLg } from "react-icons/bs"
 import { FcSettings } from "react-icons/fc"
-// import Header from './components/Header';
+import Header from './components/Header';
 import { ThemeContext } from './components/contexts/theme-context';
-import RecArtists from './components/RecArtists/RecArtists';
-import { ISingle } from './components/RecArtists/SingleArtists';
-
+import Filter from './components/Filter/FilterResults';
+import Loader from './components/Loader';
+import {AiOutlineClear} from "react-icons/ai"
 
 const App: React.FC = () => {
   const [input, setInput] = useState('')
@@ -24,7 +24,8 @@ const App: React.FC = () => {
   const { isOpenHowTo, toggleHowTo } = useModalHowTo()
   const { isOpenSettings, toggleSettings } = useModalSettings()
   const [theme, setTheme] = useState('light')
-
+  const [filterName, setFilterName] = useState('')
+  const [isLoading, setIsLoading] = useState<boolean>();
 
   const toggleTheme = () => {
     if (theme === 'dark') {
@@ -45,6 +46,7 @@ const App: React.FC = () => {
 
   const api = async (input: Props["input"], oldInput: Props["oldInput"], validObjects: Props["validObjects"]) => {
     const itens = await Api(input)
+    setValues([])
     if (itens === null) {
       window.alert("Artist not found")
     } else {
@@ -54,16 +56,17 @@ const App: React.FC = () => {
       const newArray = await removeEmptyObjects(addressedValues)
       setValues(newArray)
     }
+    setIsLoading(false); 
   }
-
+  
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-
+    setIsLoading(true);
+    
 
     if (!input) {
       alert("O campo não pode ser vazio")
-      // setIsOpen(true)// abrir um modalzitcho
       return
     }
 
@@ -72,58 +75,104 @@ const App: React.FC = () => {
 
     api(newInput, oldInput, validObjects)
 
-    while (values.length === 0) {
-      console.log("carregando")
-      break;
+
+  }
+
+  const filterYearOldtoNew = () => {
+      const n = values.sort((a, b) => a.year - b.year)
+      setValues(n)
+  }
+  const filterYearNewtoOld = () => {
+      const n = values.sort((a, b) => b.year - a.year)
+      setValues(n)
+  }
+
+  const filterTitle = () => {
+      const n = values.sort((a,b) => a.title > b.title ? 1 : -1)
+      setValues(n)
+  }
+
+  useEffect(()=> {
+    toggleFilter()
+    console.log(filterName)
+  }, [filterName])
+
+  const toggleFilter = () => {
+    switch (filterName) {
+
+      case "Year-Old-New":
+        filterYearOldtoNew()
+        break;
+
+      case "Year-New-Old":
+        filterYearNewtoOld()
+        break;
+
+      case "Artist":
+        console.log("lili")
+        break;
+
+      case "Title":
+        filterTitle()
+        break;
     }
-
   }
-
-  const handleClick:React.MouseEventHandler<HTMLDivElement>  = async (selectedArtistName:ISingle["name"]) => {
-    setInput(selectedArtistName)
-    console.log(input)
-    console.log("entrou")
-    const itens = await Api(input)
-    const newItens = await retrieveArt(itens)
-    const validArtist = checkArtists(newItens, oldInput, validObjects)
-    const addressedValues = addressingValues(validArtist)
-    const newArray = await removeEmptyObjects(addressedValues)
-    setValues(newArray)
+  
+  const handleClear = () => {
+    setValues([])
+    setFilterName("")
   }
-
-
-
+  console.log(values, "values")
+  
+  // const handleClick = async (selectedArtistName:ISingle["name"]) => {
+  //   console.log("ta aq")
+  //   console.log(selectedArtistName)
+  
+  //   console.log(input)
+  //   const itens = await Api(input)
+  //   const newItens = await retrieveArt(itens)
+  //   const validArtist = checkArtists(newItens, oldInput, validObjects)
+  //   const addressedValues = addressingValues(validArtist)
+  //   const newArray = await removeEmptyObjects(addressedValues)
+  //   setValues(newArray)
+  // }
+  
+  
+  
   // criar novo arquivo p nome do artista e podendo dar like etc 
   //settings: darkmode e idioma ate agora
-  //footer: meu insta meu github meu linkedin logo da dws
   // salvar no cache n sei cm
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <div className={`App ${theme}-theme`}>
-        <div className={`input-wrapper  ${theme}-theme`}>
-          <div className='Modal-Btns'>
-            <div className='how-to-modal'>
-              <BsQuestionLg onClick={toggleHowTo} className={`Modal-btn-howto ${theme}-theme`} />
+        <div className='App-Container'>
+          <div className='App-Wrapper'>
+            <div className='Modal-Btns-Container'>
+              <Header />
+              <div className='Modal-Btns'>
+                <BsQuestionLg onClick={toggleHowTo} className={`Modal-btn-howto ${theme}-theme`} />
+                <FcSettings onClick={toggleSettings} className={`Modal-Btn-Settings  ${theme}-theme`} />
+              </div>
             </div>
-            <div className='settings-modal'>
-              <FcSettings onClick={toggleSettings} className={`Modal-Btn-Settings  ${theme}-theme`} />
+            <div className={`input-wrapper  ${theme}-theme`}>
+              <ModalHowTo isOpenHowTo={isOpenHowTo} toggleHowTo={toggleHowTo}>
+                <HowToContent />
+              </ModalHowTo>
+              <ModalSettings isOpenSettings={isOpenSettings} toggleSettings={toggleSettings}>
+                <SettingsContent />
+              </ModalSettings>
+              <div className='Art-Wrapper'>
+                <div className="Filter-and-Clear">
+                <Filter filterName={filterName} setFilterName={setFilterName} />
+                <AiOutlineClear className='Clear-Btn' onClick={handleClear}/>
+                </div>
+                {isLoading ? <Loader/> : <Pieces addressedValues={values}/>}
+              
+              </div>
+              <InputField input={input} setInput={setInput} handleSubmit={handleSubmit} oldInput={oldInput} validObjects={validObjects} />
             </div>
-
           </div>
-          <InputField input={input} setInput={setInput} handleSubmit={handleSubmit} oldInput={oldInput} validObjects={validObjects}
-          />
         </div>
-        <RecArtists handleClick={handleClick}/>
-        <ModalHowTo isOpenHowTo={isOpenHowTo} toggleHowTo={toggleHowTo}>
-          <HowToContent />
-        </ModalHowTo>
-        <ModalSettings isOpenSettings={isOpenSettings} toggleSettings={toggleSettings}>
-          <SettingsContent />
-        </ModalSettings>
-        {/* <button onClick={handleDelete}>aqui</button> */}
-        <Pieces addressedValues={values}>
-          {/* <Header input={input}/> */}
-        </Pieces>
       </div>
     </ThemeContext.Provider>
   );

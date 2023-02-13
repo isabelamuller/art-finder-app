@@ -16,13 +16,13 @@
 
 .dark-theme {
   --grey: #121212;
-  --dark-purple: #18df64;
+  --dark-purple: #5D3FD3;
   --white: #121212;
-  --navy-blue: #18df64;
-  --input-border: #18df64;
-  --input-shadow: #18df64;
+  --navy-blue: #a39dbb;
+  --input-border: #5D3FD3;
+  --input-shadow: #5D3FD3;
   --black: rgb(223, 223, 223);
-  --btn-url: #18df64;
+  --btn-url: #5D3FD3;
   --modal-border: white;
 }
 
@@ -30,15 +30,10 @@
   text-align: center;
   display: block;
   height: 100vh;
+  width: 100vw;
   background-color: var(--white);
 }
 
-.input-wrapper {
-  display: flex;
-  background-color: var(--white);
-  justify-content: center;
-
-}
 
 body {
   box-sizing: border-box;
@@ -47,12 +42,16 @@ body {
 
 
 .Header {
-  margin-top: 20px;
-  width: 30vw;
-  border-bottom: 2px solid var(--navy-blue);
+  margin-top: 22px; 
+  border-bottom: 1.3px solid var(--navy-blue);
 }
 
+.App-Wrapper {
+  height: 95vh;
+  max-width: 100%;
+  min-width: 50rem;
 
+}
 
 .title {
   font-family: 'Montserrat', sans-serif;
@@ -62,59 +61,89 @@ body {
 }
 
 .Input-section {
+  border-top: 1.3px solid var(--black);
+}
+
+.Input-Form {
+  display: flex;
+  align-items: center;
+  gap:1rem;
+  justify-content: center;
+  padding-bottom: 1rem;
   margin-top: 20px;
 }
 
 .Input {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-bottom: 2rem;
+  font-size: 15px;
+  background-color: var(--white);
+  width: 100%;
+  height: 30px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  outline: none;
+  border: none;
+  color:var(--black);
+  text-align: center;
+}
+.Input-Box {
+  padding: 1rem 2rem 1rem 2rem;
+  /* background-color: red; */
+  width: 40%;
+  border: 1.3px solid var(--black);
 }
 
-.Header-input {
-  font-size: 10px;
-  background-color: white;
-  width: 60%;
-  height: 30px;
-  border-radius: 4px;
-  outline: none;
-  border: 1px solid var(--input-border);
-  box-shadow: 0 1px 0 .5px var(--input-shadow);
+.testezinho {
+  border-bottom: 1.3px solid var(--black);
 }
 
 .Submit-btn {
-  border: none;
+  border: .5px solid var(--black);
+  border-radius: 1cm;
+  height: 45px;
+  width: 45px;
   background-color: var(--white);
-
+  cursor: pointer;
+  
 }
 
 .submit-btn-icon {
   color: var(--navy-blue);
-  width: 28px;
-  transition: 200ms ease-in-out;
-  height: 28px;
-  cursor: pointer;
-  transition-property: transform;
+  width: 20px;
+  /* margin-top: 2px; */
+  height: 20px;
 }
 
-.submit-btn-icon:hover {
-  transform: scale(1.1);
-  transition: 200ms ease-in-out;
+
+
+.App-Container {
+  display: flex;
+  justify-content: center;
+}
+.Art-Wrapper {
+  margin-top: 7px;
+  height: 80vh;
+  /* background-color: red; */
+  overflow-y: scroll
 }
 
 .wrapper {
   display: flex;
   justify-content: center;
   padding-top: 2rem;
-  padding-bottom: 1rem;
-  background-color: var(--white);
+
+}
+.Filter-and-Clear {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .single-art {
   border-radius: 6px;
   border: 2px solid var(--navy-blue);
-  width: calc(100vw - 60%);
+  width: 50rem;
+  max-width: 100%;
+  min-width: 50rem;
   grid-template-columns: .5fr 1fr;
   display: grid;
   align-items: center;
@@ -123,12 +152,11 @@ body {
 
 .img-wrapper {
   width: fit-content;
-  height: fit-content;
+  height: 100%;
   background-color: var(--navy-blue);
-  padding-top: 3rem;
-  padding-left: 2rem;
-  padding-bottom: 3rem;
-  padding-right: 2rem;
+  display: flex;
+  align-items: center;
+
 }
 
 .card-text-wrapper {
@@ -137,7 +165,8 @@ body {
   justify-content: center;
   margin-right: 2rem;
   padding-left: 1rem;
-
+  padding-bottom: 2rem;
+  padding-top: 1rem ;
 }
 
 .art-title {
@@ -146,8 +175,7 @@ body {
   text-align: center;
   font-family: 'Mulish', sans-serif;
   font-weight: 300;
-  padding-bottom: .5rem;
-  font-size: 23px;
+  font-size: 20px;
   color: var(--black)
 }
 
@@ -169,7 +197,11 @@ body {
 .Btn-Url {
   cursor: pointer;
   width: fit-content;
-  background-color: var(--btn-url);
+  border: 1px solid var(--navy-blue);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  background-color: white;
+  color: var(--black);
   height: 30px;
   border-radius: 5px;
 }
@@ -181,7 +213,8 @@ body {
 .art-img {
   width: auto;
   max-width: 300px;
-  height: 230px;
+  height: 150px;
+    padding: 1.5rem 1.5rem 1.5rem 1.5rem;
 }
 
 
@@ -197,6 +230,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  left:0;
 }
 
 .Modal-HowTo-Box {
@@ -246,12 +280,11 @@ body {
 }
 
 .Modal-Btns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 36rem;
-  position: absolute;
-  margin-top: 27px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: -27px;
 }
+
 
 .Modal-btn-howto {
   cursor: pointer;
@@ -264,7 +297,6 @@ body {
 .Modal-Btn-Settings {
   cursor: pointer;
   color: var(--navy-blue);
-  font-weight: bolder;
   width: auto;
   height: 18px;
 }
@@ -275,6 +307,7 @@ body {
   height: 100vh;
   position: absolute;
   top: 0;
+  left: 0;
   background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
@@ -342,14 +375,14 @@ body {
 .Rec-Artists-Wrapper {
   display: flex;
   justify-content: center;
-
+  
 }
 .Rec-Artists-Title {
   display: flex;
 }
 .Single-Artist-Img {
-  width: 85px;
-  height: 85px;
+  width: 70px;
+  height: 70px;
   object-fit: cover;
   padding: 1rem 1rem 0rem 1rem;
   border-radius: 7px;
@@ -357,38 +390,100 @@ body {
 .Single-Artist-Wrapper {
   margin-left: 1rem;
   cursor: pointer;
+  
   background-color: var(--navy-blue);
   border-radius: 7px;
 }
 .Single-Artist-Name {
   font-family: 'Montserrat', sans-serif;
-  font-weight: 300;
-  font-size: 10px;
+  font-weight: 300;  
+  padding: 0rem 1rem .5rem 1rem;
+  max-width: 80px;
+  font-size:10px!important;
   color: var(--white);
 }
+.Rec-Artists {
+  display: block;
+  padding: 1rem 0rem 2rem 0rem;
+  width: 30vw;
+}
+.Rec-Artists h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  padding-bottom: .5rem;
+}
+
+.Filter {
+  background-color: var(--grey);
+   border-radius: 5px;
+   margin-top: 15px;
+   width: 100%;
+}
+.Filter-Wrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+}
+.Filter-Wrapper h1 {
+  font-size: 11px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;  
+  color: var(--black);
+}
+.Filter-Box {
+  margin-top: 0px;
+}
+.Filter-Label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  display: flex;
+  color: var(--black);
+  align-items: center;
+}
+
+.Loading-Spinner-Container {
+  height: 80vh;
+  max-width: 100%;
+  min-width: 50rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Clear-Btn {
+  float: left;
+  margin-left: 5px;
+  margin-top: 20px;
+  cursor: pointer;
+  color: var(--black);
+  width: 20px;
+  margin-bottom: 1rem;
+  height: 20px;
+}
+
+.Clear-Btn:hover {
+  animation-name: wiggle;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes wiggle {
+  0% { transform: rotate(0deg); }
+ 84% { transform: rotate(0deg); }
+ 85% { transform: rotate(10deg); }
+ 95% { transform: rotate(-10deg); }
+100% { transform: rotate(0deg); }
+}
+
+
+
 
 /* responsividade */
 
-@media screen and (max-width:1500px) {
-  .single-art {
-    width: calc(100vw - 55%);
-  }
-
-  .art-title {
-    font-size: 20px;
-  }
-
-}
 
 @media screen and (max-width:1400px) {
 
-  .Header {
-    width: 40vw;
-  }
-
-  .Header-input {
-    width: 80%;
-  }
 
   .Modal-HowTo-Box,
   .Modal-Settings-Box {
@@ -396,43 +491,14 @@ body {
   }
 }
 
-@media screen and (max-width:1180px) {
-  .Modal-Btns {
-    gap: 30rem;
-  }
-
-  .single-art {
-    width: calc(100vw - 45%);
-  }
-}
-
-@media screen and (max-width:1110px) {
-  .Modal-Btns {
-    gap: 25rem;
-  }
-}
 
 @media screen and (max-width:960px) {
-  .Header {
-    width: 50vw;
-  }
 
-  .single-art {
-    width: calc(100vw - 20%);
-  }
 
   .Modal-HowTo-Box,
   .Modal-Settings-Box {
     width: 50%;
   }
-
-  .Modal-Btns {
-    gap: 34rem;
-  }
-
-  /* .art-title {
-    font-size: 17px;
-  } */
 
 }
 
@@ -448,14 +514,6 @@ body {
 }
 
 @media screen and (max-width:750px) {
-  .single-art {
-    width: 100vw;
-  }
-
-  .App {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
 
   .art-img {
     height: 170px;
@@ -470,6 +528,36 @@ body {
     font-size: 15px;
   }
 
+}
+@media screen and (max-width:622px) {
+
+  .App-Wrapper {
+    width: 50rem;
+    max-width: 100%;
+    min-width: 20rem;
+  
+  }
+.single-art {
+  width: 50rem;
+  max-width: 100%;
+  min-width: 20rem;
+}
+.Modal-Btns {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.Filter {
+  margin-left: 10px;
+}
+.Filter-Label {
+  font-size: 8px;
+}
+.Filter-Wrapper h1 {
+  font-size: 9px;
+}
+.Clear-Btn {
+  margin-right: 10px;
+}
 }
 
 @media screen and (max-width:530px) {
@@ -491,4 +579,36 @@ body {
   .art-year {
     font-size: 13px;
   }
+}
+@media screen and (max-width:492px) {
+
+  .App-Wrapper {
+    min-width: 10rem;
+  
+  }
+  .Modal-HowTo-Box,
+  .Modal-Settings-Box {
+    width: 75%;
+  }
+
+  .Input {
+    font-size: 12px;
+  }
+.single-art {
+  width: 50rem;
+  max-width: 100%;
+  /* background-color: red; */
+  min-width: 10rem;
+}
+}
+@media screen and (max-width:378px) {
+
+  .Modal-HowTo-Title h1 {
+   font-size: 17px;
+  }
+  .Modal-HowTo-Content-Wrapper p {
+    font-size: 12px;
+  
+  }
+ 
 }

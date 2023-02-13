@@ -14,6 +14,7 @@ export const HowToContent = () => {
                     a simple web page that consumes an API that retrieves
                     information. In this case, it retrieves information about
                     an artist submitted by the user. So go ahead and try it!
+                    <br/>
                 </p>
                 <div className="Modal-HowTo-Title">
                     <h1>How do I use it?</h1>
