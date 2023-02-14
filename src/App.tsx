@@ -80,16 +80,16 @@ const App: React.FC = () => {
 
   const filterYearOldtoNew = () => {
       const n = values.sort((a, b) => a.year - b.year)
-      setValues(n)
+      setValues([...n])
   }
   const filterYearNewtoOld = () => {
       const n = values.sort((a, b) => b.year - a.year)
-      setValues(n)
+      setValues([...n])
   }
 
   const filterTitle = () => {
       const n = values.sort((a,b) => a.title > b.title ? 1 : -1)
-      setValues(n)
+      setValues([...n])
   }
 
   useEffect(()=> {
