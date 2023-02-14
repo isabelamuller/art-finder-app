@@ -1,10 +1,11 @@
 import axios from "axios";
 import { Props } from "../components/Input";
+import { ReactNode } from "react";
+
 
 export interface IApi {
     itens: Array<number>,
     newItens: Array<Object>
-    artistObject: Array<Object>
 
 }
 
@@ -19,10 +20,12 @@ export interface IItem {
 }
 
 export interface IItems {
+    handleClear?: () => void,
+    children?: ReactNode,
     addressedValues: Array<IItem["item"]>
 }
 
-export const Api = async (input: Props["input"]) => {
+export const Api = async (input: Props["input"] ) => {
     const response = (await axios.get(`https://collectionapi.metmuseum.org/public/collection/v1/search?hasImage=true&q=${input}`)).data
     const total = response.total
     const objectIDs: [] = response.objectIDs
@@ -31,6 +34,7 @@ export const Api = async (input: Props["input"]) => {
 }
 
 export const retrieveArt = async (itens: IApi["itens"]) => {
+
     const arrayPaitings: Array<Object> = []
 
     await Promise.all(itens.map(async (id: number) => {
@@ -45,12 +49,8 @@ export const retrieveArt = async (itens: IApi["itens"]) => {
     return arrayPaitings as IApi["newItens"]
 }
 
-// se o artista tem menos de 15 obras, mostrar so as que tem
-// acho que primeiro validar o nome. pegar so as obras que sao do artista e depois
-// iterar sobre todas pra ver se tem foto. priorizar as com foto mas se nenhuma tiver
-// vide claude monet, botar uma foto padrao
 
-export const checkArtists = async (newItens: IApi["newItens"], oldInput: Props["oldInput"]) => {
+export const checkArtists = (newItens: IApi["newItens"], oldInput: Props["oldInput"], validObjects: Props["validObjects"]) => {
     const validArtist: Array<Object> = [{}]
     const newInput = oldInput.toUpperCase()
 
@@ -60,52 +60,43 @@ export const checkArtists = async (newItens: IApi["newItens"], oldInput: Props["
 
         if (newString === newInput) {
             validArtist.push(elem)
-            console.log("eh igual", "input: ", newInput, "na api: ", newString)
-        } else {
-            console.log("NAO eh igual", "input: ", newInput, "na api: ", newString)
         }
-        console.log(newString)
+        return validArtist as IApi["newItens"]
     })
-    
-    return validArtist as IApi["artistObject"]
+
+    validArtist.forEach((elem) => {
+        let { primaryImageSmall }: any = elem
+
+        if (primaryImageSmall !== "") {
+            validObjects.push(elem)
+        }
+        return validObjects
+    })
+
+    if (validObjects.length < 15) {
+        const noImageObjects = validArtist.slice(0, 15)
+        noImageObjects.forEach((elem) => {
+            validObjects.push(elem)
+        })
+
+    }
+
+    return validObjects as Props["validObjects"]
+
+
 }
 
-// const validArtist: Array<Object> = [{}]
-//  const validObjects: Array<Object> = [{}]
-
-// newItens.forEach((elem) => {
-//     const { artistDisplayName }: any = elem;
-//     if (artistDisplayName === oldInput) {
-//         validArtist.push(elem)
-//     } else {
-//         return null
-//     }
-//     return validArtist
-// })
-// console.log(validArtist, "vald")
-
-// validArtist.forEach((elem)=> {
-//     const {primaryImageSmall}: any = elem
-//     if (primaryImageSmall !== "") {
-//         validObjects.push(elem)
-//     } else {
-//         return null
-//     }
-//     return validObjects
-// })
-// console.log(validObjects, "validObjects")
-// return validObjects as IApi["artistObject"]
-
-
-export const addressingValues = (artistObject: IApi["artistObject"]) => {
+export const addressingValues = (validObjects: Props["validObjects"]) => {
     const arrayItens: Array<IItem["item"]> = []
-    console.log(artistObject, "dentro do addressing")
-
-    artistObject.forEach((elem) => {
+    validObjects.forEach((elem) => {
         const item = {} as IItem["item"]
         const { primaryImageSmall, artistDisplayName, title, objectDate, objectURL }: any = elem;
         item.artistName = artistDisplayName
-        item.img = primaryImageSmall
+        if (primaryImageSmall === "") {
+            item.img = "https://i.postimg.cc/pdf2FhnS/image-2023-02-02-002050989.png"
+        } else {
+            item.img = primaryImageSmall
+        }
         item.year = objectDate
         item.title = title
         item.url = objectURL
@@ -113,4 +104,18 @@ export const addressingValues = (artistObject: IApi["artistObject"]) => {
 
     })
     return arrayItens as IItems["addressedValues"]
+}
+
+export const removeEmptyObjects = async (validObjects: Props["validObjects"]) => {
+    const newArray: Array<Object> = [{}]
+     validObjects.forEach((elem) => {
+        const { artistName }:any = elem
+        if(artistName !== undefined) {
+            newArray.push(elem)
+        } 
+        return newArray
+    })
+    const noEmptyObjects = newArray.filter(value=>Object.keys(value).length !== 0)
+   
+    return noEmptyObjects as IItems["addressedValues"]
 }

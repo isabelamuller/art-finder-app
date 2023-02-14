@@ -1,158 +1,614 @@
-@import url('https://fonts.googleapis.com/css2?family=Aboreto&family=Mulish:wght@200;300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&family=Mulish:wght@200;300;400;500&family=Raleway:wght@100;200;300;400;500&display=swap');
 
+:root {
+  --grey: #f0f0f0;
+  --dark-purple: #715C8C;
+  --white: white;
+  --navy-blue: #223C60;
+  --input-border: #50535e;
+  --input-shadow: #A49393;
+  --black: black;
+  --red: rgb(251, 94, 94);
+  --btn-url: #56679b;
+  --modal-border: #a8a8a8;
 
+}
+
+.dark-theme {
+  --grey: #121212;
+  --dark-purple: #5D3FD3;
+  --white: #121212;
+  --navy-blue: #a39dbb;
+  --input-border: #5D3FD3;
+  --input-shadow: #5D3FD3;
+  --black: rgb(223, 223, 223);
+  --btn-url: #5D3FD3;
+  --modal-border: white;
+}
 
 .App {
   text-align: center;
+  display: block;
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--white);
 }
 
 
-
-.input-wrapper {
-  display: flex;
-  justify-content: center;
-}
-
-html, body {
-  background-color: #B4C5E4;
+body {
   box-sizing: border-box;
   margin: 0;
-  
 }
 
 
 .Header {
-  margin-top: 50px;
-  width: 50%;
-  background-color: #FBFFF1;
-  border-radius: 10px;
-  justify-content: center;
-  padding-top: 1rem;
-  padding-bottom: 3rem;
+  margin-top: 22px; 
+  border-bottom: 1.3px solid var(--navy-blue);
+}
+
+.App-Wrapper {
+  height: 95vh;
+  max-width: 100%;
+  min-width: 50rem;
+
+}
+
+.title {
+  font-family: 'Montserrat', sans-serif;
+  color: var(--navy-blue);
+  font-weight: 600;
+  margin-bottom: 5px;
 }
 
 .Input-section {
+  border-top: 1.3px solid var(--black);
+}
+
+.Input-Form {
   display: flex;
+  align-items: center;
+  gap:1rem;
   justify-content: center;
+  padding-bottom: 1rem;
+  margin-top: 20px;
 }
 
 .Input {
-  display: flex;
-  align-items: center;
-  width: 70%;
-}
-
-h1 {
-  font-family: 'Aboreto', cursive;
-}
-
-h4 {
+  font-size: 15px;
+  background-color: var(--white);
+  width: 100%;
+  height: 30px;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 400;
-  font-family: 'Mulish', sans-serif;
+  outline: none;
+  border: none;
+  color:var(--black);
+  text-align: center;
+}
+.Input-Box {
+  padding: 1rem 2rem 1rem 2rem;
+  /* background-color: red; */
+  width: 40%;
+  border: 1.3px solid var(--black);
 }
 
-.Header-input {
-  padding: 1rem;
-  width: 90%;
-  font-size: 1rem;
-  border-radius: 5px;
-  border: inset 2px #f1eed6;
-  outline: none;
+.testezinho {
+  border-bottom: 1.3px solid var(--black);
 }
 
 .Submit-btn {
-  /* position: absolute; */
-  width: 30px;
-  height: 30px;
+  border: .5px solid var(--black);
   border-radius: 1cm;
-  margin-left: 6px;
-  border: none;
-  background-color: #B4C5E4;
-  transition: 300ms ease-in-out;
+  height: 45px;
+  width: 45px;
+  background-color: var(--white);
   cursor: pointer;
+  
 }
 
-.Submit-btn:hover {
-  transform: scale(.9);
-  transition: 300ms ease-in-out;
+.submit-btn-icon {
+  color: var(--navy-blue);
+  width: 20px;
+  /* margin-top: 2px; */
+  height: 20px;
 }
 
+
+
+.App-Container {
+  display: flex;
+  justify-content: center;
+}
+.Art-Wrapper {
+  margin-top: 7px;
+  height: 80vh;
+  /* background-color: red; */
+  overflow-y: scroll
+}
 
 .wrapper {
   display: flex;
   justify-content: center;
-  padding-top:2rem;
-  padding-bottom: 1rem;
+  padding-top: 2rem;
+
 }
-.single-art {
-  border-radius:10px;
-  width: calc(100vw - 55%);
-  display:flex;
-  flex-direction: column;
+.Filter-and-Clear {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  background-color: #f1eed6;
-  padding:1rem;
-  padding-bottom: 3rem;
-  
 }
+
+.single-art {
+  border-radius: 6px;
+  border: 2px solid var(--navy-blue);
+  width: 50rem;
+  max-width: 100%;
+  min-width: 50rem;
+  grid-template-columns: .5fr 1fr;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+}
+
 .img-wrapper {
   width: fit-content;
-  height: fit-content;
-  padding-top: 3rem;
-  padding-left: 2rem;
-  padding-bottom: 1.5rem;
-  padding-right: 2rem;
+  height: 100%;
+  background-color: var(--navy-blue);
+  display: flex;
+  align-items: center;
+
 }
+
 .card-text-wrapper {
   display: flex;
+  height: fit-content;
   justify-content: center;
-  
+  margin-right: 2rem;
+  padding-left: 1rem;
+  padding-bottom: 2rem;
+  padding-top: 1rem ;
 }
 
 .art-title {
-  max-width:700px;
+  max-width: 400px;
   height: fit-content;
   text-align: center;
   font-family: 'Mulish', sans-serif;
   font-weight: 300;
+  font-size: 20px;
+  color: var(--black)
 }
-.art-artist, .art-year  {
+
+.art-artist,
+.art-year {
   font-family: 'Mulish', sans-serif;
   font-weight: 200;
-
+  color: var(--black)
 }
+
+.art-url {
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  letter-spacing: 1px;
+  color: var(--white);
+}
+
+.Btn-Url {
+  cursor: pointer;
+  width: fit-content;
+  border: 1px solid var(--navy-blue);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  background-color: white;
+  color: var(--black);
+  height: 30px;
+  border-radius: 5px;
+}
+
+.Btn-Url:hover {
+  transform: translateY(5%);
+}
+
 .art-img {
   width: auto;
-  height: 250px;
+  max-width: 300px;
+  height: 150px;
+    padding: 1.5rem 1.5rem 1.5rem 1.5rem;
 }
 
-@media screen and (max-width:1500px) {
-  .Header {
-    width:60%;
-  }
-  .single-art {
-    width: calc(100vw - 40%);
-  }
-  /* .art-img {
-    height: 200px;
-  } */
+
+/* modal  */
+
+.Modal-HowTo-Overlay {
+  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left:0;
 }
+
+.Modal-HowTo-Box {
+  display: block;
+  background-color: var(--grey);
+  width: 30%;
+  height: 70%;
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+.Modal-HowTo-Content-Wrapper {
+  padding: 0rem 2rem 0rem 2rem;
+  height: 95%;
+}
+
+.Modal-HowTo-Title {
+  padding-top: 1rem;
+  border-bottom: 1px solid var(--black);
+}
+
+.Modal-HowTo-Title h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+}
+
+.Modal-HowTo-Content-Wrapper p {
+  margin-top: 2rem;
+  font-size: 13.5px;
+  line-height: 1.5rem;
+  padding: 0rem 1rem 0rem 1rem;
+  font-family: 'Montserrat', sans-serif;
+  text-align: justify;
+
+}
+
+.Modal-HowTo-Footer h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 10px;
+  color: var(--black);
+}
+
+.Socials-link {
+  color: var(--black);
+  letter-spacing: .5px;
+}
+
+.Modal-Btns {
+  display: flex;
+  justify-content: space-between;
+  margin-top: -27px;
+}
+
+
+.Modal-btn-howto {
+  cursor: pointer;
+  color: var(--red);
+  font-weight: bolder;
+  width: auto;
+  height: 15px;
+}
+
+.Modal-Btn-Settings {
+  cursor: pointer;
+  color: var(--navy-blue);
+  width: auto;
+  height: 18px;
+}
+
+.Modal-Settings-Overlay {
+  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Modal-Settings-Box {
+  display: block;
+  background-color: var(--grey);
+  width: 30%;
+  height: 30%;
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+.Modal-Settings-Wrapper {
+  padding: 0rem 2rem 0rem 2rem;
+}
+
+.Modal-Settings-Title {
+  padding-top: 1rem;
+  border-bottom: 1px solid var(--black);
+}
+
+.Modal-Settings-Title h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+
+}
+
+.Modal-Settings-Wrapper h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 200;
+  font-size: 14px;
+  padding-top: 2rem;
+}
+
+.Modal-Settings-Content {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 30px;
+
+}
+
+.Modal-HowTo-Content-Wrapper,
+.Modal-Settings-Wrapper {
+  color: var(--black);
+}
+
+.Btn-Mode {
+  width: auto;
+  cursor: pointer;
+  margin-top: 3rem;
+}
+
+.Line-Settings {
+  height: 5px;
+  color: black;
+}
+
+/* rec artists */
+
+.Rec-Artists-Wrapper {
+  display: flex;
+  justify-content: center;
+  
+}
+.Rec-Artists-Title {
+  display: flex;
+}
+.Single-Artist-Img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  padding: 1rem 1rem 0rem 1rem;
+  border-radius: 7px;
+}
+.Single-Artist-Wrapper {
+  margin-left: 1rem;
+  cursor: pointer;
+  
+  background-color: var(--navy-blue);
+  border-radius: 7px;
+}
+.Single-Artist-Name {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;  
+  padding: 0rem 1rem .5rem 1rem;
+  max-width: 80px;
+  font-size:10px!important;
+  color: var(--white);
+}
+.Rec-Artists {
+  display: block;
+  padding: 1rem 0rem 2rem 0rem;
+  width: 30vw;
+}
+.Rec-Artists h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  padding-bottom: .5rem;
+}
+
+.Filter {
+  background-color: var(--grey);
+   border-radius: 5px;
+   margin-top: 15px;
+   width: 100%;
+}
+.Filter-Wrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+}
+.Filter-Wrapper h1 {
+  font-size: 11px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;  
+  color: var(--black);
+}
+.Filter-Box {
+  margin-top: 0px;
+}
+.Filter-Label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  display: flex;
+  color: var(--black);
+  align-items: center;
+}
+
+.Loading-Spinner-Container {
+  height: 80vh;
+  max-width: 100%;
+  min-width: 50rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Clear-Btn {
+  float: left;
+  margin-left: 5px;
+  margin-top: 20px;
+  cursor: pointer;
+  color: var(--black);
+  width: 20px;
+  margin-bottom: 1rem;
+  height: 20px;
+}
+
+.Clear-Btn:hover {
+  animation-name: wiggle;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes wiggle {
+  0% { transform: rotate(0deg); }
+ 84% { transform: rotate(0deg); }
+ 85% { transform: rotate(10deg); }
+ 95% { transform: rotate(-10deg); }
+100% { transform: rotate(0deg); }
+}
+
+
+
+
+/* responsividade */
+
+
+@media screen and (max-width:1400px) {
+
+
+  .Modal-HowTo-Box,
+  .Modal-Settings-Box {
+    width: 40%;
+  }
+}
+
 
 @media screen and (max-width:960px) {
-  .Header {
-    width:80%;
+
+
+  .Modal-HowTo-Box,
+  .Modal-Settings-Box {
+    width: 50%;
   }
-  .single-art {
-    width: calc(100vw - 20%);
-  }
+
 }
+
 @media screen and (max-width:850px) {
   .art-img {
     height: 200px;
   }
+
+  .Modal-HowTo-Box,
+  .Modal-Settings-Box {
+    width: 55%;
   }
-  @media screen and (max-width:530px) {
-    .art-img {
-      height: 170px;
-    }
-    }
+}
+
+@media screen and (max-width:750px) {
+
+  .art-img {
+    height: 170px;
+  }
+
+  .art-title {
+    font-size: 18px;
+  }
+
+  .art-artist,
+  .art-year {
+    font-size: 15px;
+  }
+
+}
+@media screen and (max-width:622px) {
+
+  .App-Wrapper {
+    width: 50rem;
+    max-width: 100%;
+    min-width: 20rem;
+  
+  }
+.single-art {
+  width: 50rem;
+  max-width: 100%;
+  min-width: 20rem;
+}
+.Modal-Btns {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.Filter {
+  margin-left: 10px;
+}
+.Filter-Label {
+  font-size: 8px;
+}
+.Filter-Wrapper h1 {
+  font-size: 9px;
+}
+.Clear-Btn {
+  margin-right: 10px;
+}
+}
+
+@media screen and (max-width:530px) {
+  .art-img {
+    height: 140px;
+  }
+
+  .Modal-HowTo-Box,
+  .Modal-Settings-Box {
+    width: 65%;
+  }
+
+
+  .art-title {
+    font-size: 16px;
+  }
+
+  .art-artist,
+  .art-year {
+    font-size: 13px;
+  }
+}
+@media screen and (max-width:492px) {
+
+  .App-Wrapper {
+    min-width: 10rem;
+  
+  }
+  .Modal-HowTo-Box,
+  .Modal-Settings-Box {
+    width: 75%;
+  }
+
+  .Input {
+    font-size: 12px;
+  }
+.single-art {
+  width: 50rem;
+  max-width: 100%;
+  /* background-color: red; */
+  min-width: 10rem;
+}
+}
+@media screen and (max-width:378px) {
+
+  .Modal-HowTo-Title h1 {
+   font-size: 17px;
+  }
+  .Modal-HowTo-Content-Wrapper p {
+    font-size: 12px;
+  
+  }
+ 
+}
